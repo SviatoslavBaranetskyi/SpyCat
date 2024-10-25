@@ -14,7 +14,6 @@ class SpyCat(Base):
     breed = Column(String)
     salary = Column(Integer)
 
-    # Связь с миссиями
     missions = relationship("Mission", back_populates="cat")
 
 
