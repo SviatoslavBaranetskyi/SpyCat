@@ -1,9 +1,9 @@
-from app.db.database import SessionLocal
-from app.schemas.schemas import *
-from app.services.crud import *
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+
+from app.db.database import SessionLocal
+from app.services.crud import *
+from app.validations.validations import validate_breed
 
 router = APIRouter()
 
@@ -17,7 +17,12 @@ def get_db():
 
 
 @router.post("/cats/", response_model=SpyCatResponse)
-def add_spy_cat(spy_cat: SpyCatCreate, db: Session = Depends(get_db)):
+async def add_spy_cat(spy_cat: SpyCatCreate, db: Session = Depends(get_db)):
+    is_valid_breed = await validate_breed(spy_cat.breed)
+
+    if not is_valid_breed:
+        raise HTTPException(status_code=400, detail="Invalid breed provided")
+
     return create_spy_cat(db=db, spy_cat=spy_cat)
 
 

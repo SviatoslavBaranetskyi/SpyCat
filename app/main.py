@@ -1,3 +1,4 @@
+import httpx
 from fastapi import FastAPI
 
 from app.db.database import engine
