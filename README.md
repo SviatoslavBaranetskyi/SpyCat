@@ -61,6 +61,7 @@ Content-Type: application/json<br>
 <br>
 - Delete SpyCat<br>
 DELETE /api/cats/{spy_cat_id}<br>
+
 ### Missions
 - Get a list of all missions<br>
 GET api/missions/<br>
